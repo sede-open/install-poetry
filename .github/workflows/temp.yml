@@ -5,6 +5,8 @@ on: push
 
 jobs:
   test-windows:
+    env:
+      POETRY_CACHE_DIR: ~/.cache/pypoetry
     defaults:
       run:
         shell: bash
@@ -17,15 +19,13 @@ jobs:
       - uses: ./
         with:
           version: 1.1.4
-          virtualenvs-create: true
-          virtualenvs-in-project: true
+          virtualenvs-create: false
       - uses: actions/cache@v2
         id: cached-venv
         with:
-          path: .venv
-          key: test-windows-cache-${{ hashFiles('**/poetry.lock') }}
+          path: ~/.cache
+          key: test-windows-cache-${{ hashFiles('**/poetry.lock') }}-2
       - run: poetry install --no-interaction --no-root -vvv
         if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
       - run: |
-          source .venv/scripts/activate
           pytest --version
