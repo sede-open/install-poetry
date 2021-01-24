@@ -24,8 +24,8 @@ jobs:
         id: cached-venv
         with:
           path: ~/.cache
-          key: test-windows-cache-${{ hashFiles('**/poetry.lock') }}-2
+          key: test-windows-cache-${{ hashFiles('**/poetry.lock') }}-4
       - run: poetry install --no-interaction --no-root -vvv
-        if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
       - run: |
           pytest --version
+          echo "test"
