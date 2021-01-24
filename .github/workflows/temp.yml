@@ -27,5 +27,5 @@ jobs:
       - run: poetry install --no-interaction --no-root -vvv
         if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
       - run: |
-          source $VENV
+          source .venv/scripts/activate
           pytest --version
